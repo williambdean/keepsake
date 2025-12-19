@@ -1,0 +1,28 @@
+---
+repos:
+  # Standard pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.pdf$'
+      - id: end-of-file-fixer
+        exclude: '\.pdf$'
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+        exclude: '\.pdf$'
+
+  # Local Typst-specific hooks
+  - repo: local
+    hooks:
+      - id: format-code
+        name: Format code
+        entry: typstyle -i .
+        language: system
+        pass_filenames: false
+        types: [text]
+        files: '\.typ$'
