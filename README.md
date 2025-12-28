@@ -4,6 +4,63 @@ Create printable, folding greeting cards for various occasions like birthdays,
 holidays, and thank-you notes. This package handles the complex layout and
 rotation logic required for professional-looking physical stationery.
 
+![Example Card](./example-card.png)
+
+<details><summary>Example Card Code</summary>
+
+```typst
+#import "lib.typ": primary-content, quarter-fold-vertical
+
+#let paper = "a4"
+
+#let front = [
+  #set text(size: 50pt, fill: blue, font: "Futura")
+  = Happy Birthday
+]
+#let primary = {
+  set text(size: 15pt)
+
+  primary-content(
+    greeting: "Dear Friend,",
+    body: [
+      #v(1.5em)
+
+      I hope you enjoy your birthday. Have a great day!
+
+      #v(1.5em)
+
+      Enjoy the dinner reservation.
+    ],
+    sender: "Will",
+  )
+}
+#let back = {
+  box(height: 100%, width: 100%)[
+    #set align(bottom + center)
+    #set text(size: 15pt)
+    #pad(bottom: 2em)[
+      Made with ❤️
+    ]
+  ]
+}
+#let secondary = [
+  #set align(center + horizon)
+  #set text(size: 50pt)
+  🎁
+]
+
+#show: quarter-fold-vertical.with(
+  front: front,
+  primary: primary,
+  secondary: secondary,
+  back: back,
+  paper: paper,
+)
+```
+
+</details>
+
+
 ## Usage
 To use this package, import it into your Typst file:
 
