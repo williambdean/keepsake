@@ -2,7 +2,7 @@
 name = "keepsake"
 version = "0.1.0"
 entrypoint = "lib.typ"
-authors = ["Will Dean"]
+authors = ["Will Dean <@williambdean>"]
 license = "MIT"
 description = "Create printable, folding greeting cards."
 repository = "https://github.com/williambdean/keepsake"
