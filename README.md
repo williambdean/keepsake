@@ -4,7 +4,9 @@ Create printable, folding greeting cards for various occasions like birthdays,
 holidays, and thank-you notes. This package handles the complex layout and
 rotation logic required for professional-looking physical stationery.
 
-<img alt="Example Card" src="./example-card.png" width="50%">
+<div align="center">
+  <img alt="Example Card" src="./example-card.png" width="75%">
+</div>
 
 <details><summary>Example Card Code</summary>
 
