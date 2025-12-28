@@ -4,12 +4,12 @@ Create printable, folding greeting cards for various occasions like birthdays,
 holidays, and thank-you notes. This package handles the complex layout and
 rotation logic required for professional-looking physical stationery.
 
-![Example Card](./example-card.png)
+![Example Card](./example-card.png){ width=50% }
 
 <details><summary>Example Card Code</summary>
 
 ```typst
-#import "lib.typ": primary-content, quarter-fold-vertical
+#import "@preview/keepsake:0.1.0": primary-content, quarter-fold-vertical
 
 #let paper = "a4"
 
