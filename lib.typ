@@ -1,28 +1,26 @@
-// Internal helper to handle the common page setup and panel styling
-#let _panel-box(content, inset) = {
-  box(width: 100%, height: 100%, inset: inset, align(center + horizon, content))
-}
+//Make primary content
+#let primary-content(
+  greeting: "Dear Someone,",
+  date: [],
+  salutation: "From,",
+  sender: [],
+  body: [],
+  inset: 3em,
+) = {
+  box(inset: inset)[
+    #set align(left)
+    #grid(
+      columns: (1fr, 1fr),
+      align: (left, right),
+      text(greeting), text(date, fill: rgb("#888888")),
+    )
 
-// Internal helper for drawing fold lines
-#let _guides(orientation) = {
-  if orientation == "vertical" {
-    place(center, line(start: (0pt, 0pt), end: (0pt, 100%), stroke: (
-      dash: "dashed",
-      paint: gray,
-      thickness: 0.5pt,
-    )))
-  } else if orientation == "cross" {
-    place(center + horizon, line(start: (0pt, -50%), end: (0pt, 50%), stroke: (
-      dash: "dashed",
-      paint: gray,
-      thickness: 0.5pt,
-    )))
-    place(center + horizon, line(start: (-50%, 0pt), end: (50%, 0pt), stroke: (
-      dash: "dashed",
-      paint: gray,
-      thickness: 0.5pt,
-    )))
-  }
+    #body
+
+    #set align(right)
+    #salutation \
+    #sender
+  ]
 }
 
 /// A standard card folded once.
@@ -31,99 +29,75 @@
 #let bifold(
   paper: "us-letter",
   front: [],
+  primary: [],
+  secondary: [],
   back: [],
-  inside-left: [],
-  inside-right: [],
-  draw-folds: false,
-  inset: 1in,
-  body, // Captured but not rendered by default to avoid accidental text overflow
 ) = {
   set page(paper: paper, flipped: true, margin: 0pt)
 
   // Page 1: Outside (Back | Front)
-  if draw-folds { _guides("vertical") }
   grid(
     columns: (1fr, 1fr),
     rows: 100%,
-    _panel-box(back, inset), _panel-box(front, inset),
+    gutter: 0pt,
+    align(center + horizon, back), align(center + horizon, front),
   )
 
   pagebreak()
 
   // Page 2: Inside (Left | Right)
-  if draw-folds { _guides("vertical") }
   grid(
     columns: (1fr, 1fr),
     rows: 100%,
-    _panel-box(inside-left, inset), _panel-box(inside-right, inset),
+    gutter: 0pt,
+    align(center + horizon, secondary), align(center + horizon, primary),
   )
 }
 
 /// A card folded twice (vertically then horizontally).
 /// Matches the reference layout:
-/// Top-Left: Front (Rotated), Top-Right: Inside Top
-/// Bottom-Left: Back, Bottom-Right: Inside Bottom
+/// Top-Left: Front (Rotated), Top-Right: secondary
+/// Bottom-Left: Back, Bottom-Right: primary
 #let quarter-fold-vertical(
-  paper: "us-letter",
   front: [],
+  primary: [],
+  secondary: [],
   back: [],
-  inside-top: [],
-  inside-bottom: [],
-  draw-folds: false,
-  inset: 0.5in,
+  paper: "us-letter",
   body,
 ) = {
   set page(paper: paper, flipped: true, margin: 0pt)
-  if draw-folds { _guides("cross") }
 
   grid(
     columns: (1fr, 1fr),
     rows: (1fr, 1fr),
+    gutter: 0pt,
+    align(center + horizon, rotate(180deg, front)),
+    align(center + horizon, secondary),
 
-    // Panel 1: Top Left (Front of the card) - Rotated 180
-    _panel-box(rotate(180deg, front), inset),
-
-    // Panel 2: Top Right (Inner upper panel)
-    _panel-box(inside-top, inset),
-
-    // Panel 3: Bottom Left (Back of the card)
-    // Aligned to bottom center to match reference
-    box(width: 100%, height: 100%, inset: inset, align(bottom + center, back)),
-
-    // Panel 4: Bottom Right (Inner lower panel)
-    _panel-box(inside-bottom, inset),
+    align(center + horizon, back), align(center + horizon, primary),
   )
 }
 
 /// A card folded horizontally then vertically.
 /// Top Row: FRONT (180°), BACK (180°)
-/// Bottom Row: INSIDE-LEFT (0°), INSIDE-RIGHT (0°)
+/// Bottom Row: secondary (0°), primary (0°)
 #let quarter-fold-horizontal(
   paper: "us-letter",
   front: [],
+  primary: [],
+  secondary: [],
   back: [],
-  inside-left: [],
-  inside-right: [],
-  draw-folds: false,
-  inset: 0.5in,
-  body,
 ) = {
   set page(paper: paper, flipped: true, margin: 0pt)
-  if draw-folds { _guides("cross") }
 
   grid(
     columns: (1fr, 1fr),
     rows: (1fr, 1fr),
+    gutter: 0pt,
+    align(center + horizon, rotate(180deg, front)),
+    align(center + horizon, rotate(180deg, back)),
 
-    _panel-box(rotate(180deg, front), inset),
-
-    // Force the back panel content to align to the "top" of its box
-    // so the user's "bottom" looks correct after rotation.
-    box(width: 100%, height: 100%, inset: inset, align(top + center, rotate(
-      180deg,
-      back,
-    ))),
-
-    _panel-box(inside-left, inset), _panel-box(inside-right, inset),
+    align(center + horizon, secondary), align(center + horizon, primary),
   )
 }
