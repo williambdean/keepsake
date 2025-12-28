@@ -32,6 +32,7 @@
   primary: [],
   secondary: [],
   back: [],
+  body,
 ) = {
   set page(paper: paper, flipped: true, margin: 0pt)
 
@@ -88,6 +89,7 @@
   primary: [],
   secondary: [],
   back: [],
+  body,
 ) = {
   set page(paper: paper, flipped: true, margin: 0pt)
 
