@@ -8,9 +8,10 @@ set -e
 # --- Configuration ---
 # List of files to be moved. Edit this array to change the files.
 FILES_TO_MOVE=(
-  "lib.typ"
   "LICENSE"
   "README.md"
+  "example-card.png"
+  "lib.typ"
   "typst.toml"
 )
 
