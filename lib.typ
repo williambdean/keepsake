@@ -1,4 +1,4 @@
-//Make primary content
+/// Template for primary content
 #let primary-content(
   greeting: "Dear Someone,",
   date: [],
@@ -55,7 +55,7 @@
   )
 }
 
-/// A card folded twice (vertically then horizontally).
+/// A card folded hamburger twice
 /// Matches the reference layout:
 /// Top-Left: Front (Rotated), Top-Right: secondary
 /// Bottom-Left: Back, Bottom-Right: primary
@@ -80,7 +80,7 @@
   )
 }
 
-/// A card folded horizontally then vertically.
+/// A card folded hotdog then hamburger
 /// Top Row: FRONT (180°), BACK (180°)
 /// Bottom Row: secondary (0°), primary (0°)
 #let quarter-fold-horizontal(
